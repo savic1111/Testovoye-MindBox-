@@ -1,0 +1,23 @@
+CREATE TABLE [Категория] ( [ID_Категории]
+ Int NOT NULL identity(1,1), [Имя_категории] Varchar(150) NULL ) go ALTER TABLE [Категория]
+ ADD CONSTRAINT [Key1] PRIMARY KEY ([ID_Категории])
+ go CREATE TABLE [Продукт] ( [ID_Продукта] 
+Int NOT NULL identity(1,1), [Имя_продукта] Varchar(150) NULL ) 
+go ALTER TABLE [Продукт] ADD CONSTRAINT [Key2] 
+PRIMARY KEY ([ID_Продукта]) go CREATE TABLE [Категория_Продукта] ( [ID_Категории] 
+Int NOT NULL, [ID_Продукта] Int NOT NULL ) 
+go ALTER TABLE [Категория_Продукта] 
+ADD CONSTRAINT [Key3] PRIMARY KEY ([ID_Категории],[ID_Продукта]) 
+go ALTER TABLE [Категория_Продукта] 
+ADD CONSTRAINT [Категория/Продукт] FOREIGN KEY ([ID_Категории]) 
+REFERENCES [Категория] ([ID_Категории]) 
+ON UPDATE NO ACTION ON DELETE NO ACTION 
+go ALTER TABLE [Категория_Продукта] 
+ADD CONSTRAINT [Продукт/Категория] FOREIGN KEY ([ID_Продукта]) 
+REFERENCES [Продукт] ([ID_Продукта]) 
+ON UPDATE NO ACTION ON DELETE NO ACTION 
+go INSERT INTO [dbo].[Продукт] ([Имя_продукта]) 
+VALUES ('Лыжи'),('Сноуборд'),('Скейт'),('Самокат'),('Ролики'),('Лонгборд') 
+GO INSERT INTO [dbo].[Категория] ([Имя_категории]) 
+VALUES ('Beddind'),('Furniture') GO SELECT e.Имя_продукта 
+FROM Продукт AS e LEFT JOIN Категория AS s ON e.ID_Продукта = s.ID_Категории
